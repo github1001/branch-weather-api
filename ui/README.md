@@ -1,4 +1,4 @@
-# 🌦️ Branch Weather UI
+# 🌦️ Branch Weather UI (frontend)
 
 A lightweight **Tailwind CSS** frontend for the **Branch Weather API** built with Spring Boot and SQL Server.
 
