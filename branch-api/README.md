@@ -1,4 +1,4 @@
-# 🌦️ Branch Weather API
+# 🌦️ Branch Weather API (backend)
 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1.0-6DB33F?logo=springboot)
