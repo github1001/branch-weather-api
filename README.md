@@ -85,12 +85,6 @@ More details:
 
 ---
 
-# Demo
-
-## Current Weather Dashboard
-
-![Current Weather](demo/Current_weather.gif)
-
 # Quick Start
 
 ```text
