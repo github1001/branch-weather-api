@@ -1,0 +1,933 @@
+{
+  "info": {
+    "_postman_id": "11688420-a78f-452c-a9c0-d9a5b98c8f3f",
+    "name": "Weather API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27077974"
+  },
+  "item": [
+    {
+      "name": "Branches",
+      "item": [
+        {
+          "name": "Create branch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Temporary branch is created\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.collectionVariables.set(\r",
+                  "    \"createdBranchId\",\r",
+                  "    response.id\r",
+                  ");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "/*{\r\n  \"branchCode\": \"KL100\",\r\n  \"branchName\": \"TRX Branch\",\r\n  \"address\": \"Jalan Tun Razak\",\r\n  \"city\": \"Kuala Lumpur\",\r\n  \"country\": \"Malaysia\",\r\n  \"latitude\": 3.1427000,\r\n  \"longitude\": 101.7201000,\r\n  \"phoneNumber\": \"03-22001234\",\r\n  \"active\": true\r\n}*/\r\n{\r\n  \"branchCode\": \"DEL001\",\r\n  \"branchName\": \"Temporary Delete Test Branch\",\r\n  \"address\": \"1 Temporary Test Road\",\r\n  \"city\": \"Kuala Lumpur\",\r\n  \"country\": \"Malaysia\",\r\n  \"latitude\": 3.1390000,\r\n  \"longitude\": 101.6869000,\r\n  \"phoneNumber\": \"03-00000000\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update branch",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"branchCode\": \"KL001\",\r\n  \"branchName\": \"Kuala Lumpur Main Headquarters\",\r\n  \"address\": \"Menara Maybank, Jalan Tun Perak\",\r\n  \"city\": \"Kuala Lumpur\",\r\n  \"country\": \"Malaysia\",\r\n  \"latitude\": 3.1478000,\r\n  \"longitude\": 101.6953000,\r\n  \"phoneNumber\": \"03-12345678\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get branch by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get branch by code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Correct branch code is returned\", function () {\r",
+                  "    pm.expect(response.branchCode).to.eql(\"KL001\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains branch details\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"id\");\r",
+                  "    pm.expect(response).to.have.property(\"branchName\");\r",
+                  "    pm.expect(response).to.have.property(\"latitude\");\r",
+                  "    pm.expect(response).to.have.property(\"longitude\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches/code/KL001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "code",
+                "KL001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get branches - page 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Page number is zero\", function () {\r",
+                  "    pm.expect(response.page).to.eql(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Page size is fixed at 10\", function () {\r",
+                  "    pm.expect(response.size).to.eql(10);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"First page contains at most 10 records\", function () {\r",
+                  "    pm.expect(response.content.length).to.be.at.most(10);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"First page is marked correctly\", function () {\r",
+                  "    pm.expect(response.first).to.eql(true);\r",
+                  "    pm.expect(response.last).to.eql(false);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches?page=0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get branches - page 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Page number is one\", function () {\r",
+                  "    pm.expect(response.page).to.eql(1);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Page contains exactly 10 records\", function () {\r",
+                  "    pm.expect(response.content.length).to.eql(10);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Middle page flags are correct\", function () {\r",
+                  "    pm.expect(response.first).to.eql(false);\r",
+                  "    pm.expect(response.last).to.eql(false);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches?page=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get branches - page 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Page number is two\", function () {\r",
+                  "    pm.expect(response.page).to.eql(2);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Last page contains remaining records\", function () {\r",
+                  "    pm.expect(response.content.length).to.eql(5);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Last-page flags are correct\", function () {\r",
+                  "    pm.expect(response.first).to.eql(false);\r",
+                  "    pm.expect(response.last).to.eql(true);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches?page=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get branches - page 99",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Out-of-range page is empty\", function () {\r",
+                  "    pm.expect(response.content).to.be.an(\"array\").that.is.empty;\r",
+                  "    pm.expect(response.empty).to.eql(true);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches?page=99",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "99"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get branches - page -1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Negative page returns 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Useful error message is returned\", function () {\r",
+                  "    pm.expect(response.message)\r",
+                  "        .to.eql(\"Page number must be zero or greater.\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches?page=-1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "-1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete branch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Branch is deleted\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Delete response has no body\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.eql(\"\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches/30",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "30"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm branch deletion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deleted branch cannot be retrieved\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches/30",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "30"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Weather",
+      "item": [
+        {
+          "name": "Get KL branch weather",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches/1/weather",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "1",
+                "weather"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get PJ branch weather",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches/2/weather",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "2",
+                "weather"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get weather - branch not found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Missing branch message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.include(\"999999\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Open-Meteo is not called for missing branch\", function () {\r",
+                  "    pm.expect(response.error).to.eql(\"Not Found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/branches/999999/weather",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "999999",
+                "weather"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Validation and Errors",
+      "item": [
+        {
+          "name": "Create duplicate branch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Duplicate branch returns 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Duplicate error is descriptive\", function () {\r",
+                  "    pm.expect(response.message).to.include(\"KL001\");\r",
+                  "    pm.expect(response.error).to.eql(\"Conflict\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"branchCode\": \"KL001\",\r\n  \"branchName\": \"Duplicate Kuala Lumpur Branch\",\r\n  \"address\": \"Test Address\",\r\n  \"city\": \"Kuala Lumpur\",\r\n  \"country\": \"Malaysia\",\r\n  \"latitude\": 3.1478000,\r\n  \"longitude\": 101.6953000,\r\n  \"phoneNumber\": \"03-11111111\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create invalid branch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Invalid request returns 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Validation response contains field errors\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Request validation failed.\");\r",
+                  "    pm.expect(response.fieldErrors).to.be.an(\"object\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Expected fields failed validation\", function () {\r",
+                  "    pm.expect(response.fieldErrors).to.have.property(\"branchCode\");\r",
+                  "    pm.expect(response.fieldErrors).to.have.property(\"branchName\");\r",
+                  "    pm.expect(response.fieldErrors).to.have.property(\"latitude\");\r",
+                  "    pm.expect(response.fieldErrors).to.have.property(\"longitude\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"branchCode\": \"\",\r\n  \"branchName\": \"\",\r\n  \"address\": \"\",\r\n  \"city\": \"\",\r\n  \"country\": \"\",\r\n  \"latitude\": 120.0000000,\r\n  \"longitude\": 250.0000000,\r\n  \"phoneNumber\": \"123456789012345678901234567890123456\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create branch with invalid JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Invalid JSON returns 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Readable JSON error is returned\", function () {\r",
+                  "    pm.expect(response.message)\r",
+                  "        .to.eql(\"The request body contains invalid or unreadable JSON.\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"branchCode\" = \"BAD001\",\r\n  \"branchName\": \"Broken JSON\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get missing branch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Missing branch returns 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Correct not-found response is returned\", function () {\r",
+                  "    pm.expect(response.error).to.eql(\"Not Found\");\r",
+                  "    pm.expect(response.message).to.include(\"999999\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"branchCode\": \"\",\r\n  \"branchName\": \"\",\r\n  \"address\": \"\",\r\n  \"city\": \"\",\r\n  \"country\": \"\",\r\n  \"latitude\": 120.0000000,\r\n  \"longitude\": 250.0000000,\r\n  \"phoneNumber\": \"123456789012345678901234567890123456\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches/999999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get missing branch by code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Missing branch code returns 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Branch code appears in the error\", function () {\r",
+                  "    pm.expect(response.message).to.include(\"UNKNOWN999\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"branchCode\": \"\",\r\n  \"branchName\": \"\",\r\n  \"address\": \"\",\r\n  \"city\": \"\",\r\n  \"country\": \"\",\r\n  \"latitude\": 120.0000000,\r\n  \"longitude\": 250.0000000,\r\n  \"phoneNumber\": \"123456789012345678901234567890123456\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches/code/UNKNOWN999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "code",
+                "UNKNOWN999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete missing branch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deleting missing branch returns 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"branchCode\": \"\",\r\n  \"branchName\": \"\",\r\n  \"address\": \"\",\r\n  \"city\": \"\",\r\n  \"country\": \"\",\r\n  \"latitude\": 120.0000000,\r\n  \"longitude\": 250.0000000,\r\n  \"phoneNumber\": \"123456789012345678901234567890123456\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/branches/999999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "branches",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "createdBranchId",
+      "value": ""
+    }
+  ]
+}
