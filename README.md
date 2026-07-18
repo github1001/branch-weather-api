@@ -1,4 +1,4 @@
-# 🌦️ Branch Weather API for Maybank
+# 🌦️ Branch Weather API for Maybank Malaysia
 
 A full-stack portfolio project demonstrating an enterprise-style weather dashboard built with **Spring Boot**, **SQL Server**, **Tailwind CSS**, and the **Open-Meteo API**.
 
