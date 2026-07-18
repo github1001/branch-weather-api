@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="A lightweight Tailwind CSS frontend for the Branch Weather API."
+  />
+  <title>Branch Weather</title>
+
+  <!-- Tailwind CDN is suitable for this lightweight portfolio demo. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          boxShadow: {
+            soft: "0 18px 45px rgba(15, 23, 42, 0.10)"
+          }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="min-h-screen bg-slate-100 text-slate-900">
+  <div class="fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <div class="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-sky-300/30 blur-3xl"></div>
+    <div class="absolute right-0 top-28 h-80 w-80 rounded-full bg-indigo-300/20 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-white/60 bg-white/80 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-7 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <p class="mb-1 text-sm font-semibold uppercase tracking-[0.22em] text-sky-600">
+          Spring Boot • SQL Server • Open-Meteo
+        </p>
+        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Branch Weather</h1>
+        <p class="mt-2 max-w-2xl text-slate-600">
+          Browse Malaysian branch locations and view their latest weather conditions.
+        </p>
+      </div>
+
+      <button
+        id="refreshAllButton"
+        type="button"
+        class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 font-semibold text-white shadow-soft transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        <span aria-hidden="true">↻</span>
+        Refresh branches
+      </button>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-5 py-8 sm:px-8">
+    <section class="mb-7 grid gap-4 lg:grid-cols-[1fr_auto]">
+      <div class="rounded-2xl border border-white bg-white/90 p-4 shadow-soft">
+        <label for="searchInput" class="mb-2 block text-sm font-semibold text-slate-700">
+          Search branches
+        </label>
+        <div class="relative">
+          <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400" aria-hidden="true">
+            ⌕
+          </span>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search by name, code, city, or country"
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none transition focus:border-sky-500 focus:bg-white focus:ring-4 focus:ring-sky-100"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="min-w-32 rounded-2xl border border-white bg-white/90 p-4 shadow-soft">
+          <p class="text-sm text-slate-500">Branches</p>
+          <p id="branchCount" class="mt-1 text-2xl font-bold">0</p>
+        </div>
+        <div class="min-w-32 rounded-2xl border border-white bg-white/90 p-4 shadow-soft">
+          <p class="text-sm text-slate-500">Weather loaded</p>
+          <p id="weatherCount" class="mt-1 text-2xl font-bold">0</p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="statusMessage"
+      class="mb-6 hidden rounded-2xl border px-5 py-4 text-sm"
+      role="status"
+      aria-live="polite"
+    ></section>
+
+    <section
+      id="branchGrid"
+      class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
+      aria-live="polite"
+    ></section>
+
+    <section id="emptyState" class="hidden rounded-3xl border border-dashed border-slate-300 bg-white/70 p-12 text-center">
+      <div class="text-4xl" aria-hidden="true">🌦️</div>
+      <h2 class="mt-4 text-xl font-bold">No branches found</h2>
+      <p class="mt-2 text-slate-600">Try another search or confirm that the backend API is running.</p>
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-5 pb-10 pt-2 text-center text-sm text-slate-500 sm:px-8">
+    Branch Weather API portfolio interface
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
